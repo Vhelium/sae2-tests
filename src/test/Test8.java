@@ -1,6 +1,6 @@
 // pointer assignment with valid arg
 // NO_DIV_ZERO
-// NO_OUT_OF_BOUNDS
+// MAY_OUT_OF_BOUNDS
 // Timon Blattner timonbl@ethz.ch
 
 public class Test8 {
@@ -11,6 +11,6 @@ public class Test8 {
         PrinterArray yy = p2;
 
         xx.sendJob(4);
-        yy.sendJob(1);
+        yy.sendJob(1); // y == p2 and therefore 1 not element of [0]
     }
 }
