@@ -14,6 +14,7 @@ JAVA_HOME = ''
 APRON_HOME_BUILD = ''
 APRON_HOME_RUN = ''
 
+# build and run the test cases
 def runTests():
     loadPaths()
     build()
@@ -50,6 +51,7 @@ def runTests():
         else:
             print("\t[EE] Expected {" + expOOB + "} but got {" + resOOB + "}")
 
+# execute a single test and get the result back
 def executeTest(code_test, name):
     resNP = ""
     resOOB = ""
@@ -66,6 +68,7 @@ def executeTest(code_test, name):
 
     return resNP, resOOB
 
+# load library paths from existing build.sh and run.sh
 def loadPaths():
     with open("build.sh", "r", encoding='utf8', errors='replace') as fbuild:
         for line in fbuild:
@@ -84,19 +87,25 @@ def loadPaths():
                 global APRON_HOME_RUN
                 APRON_HOME_RUN = tail.rstrip()
 
+# construct the run command
 def getRunCommand(className):
     base = os.getcwd()
     return (
-            r"export CLASSPATH=.:"+base+r"/soot-2.5.0.jar:"+APRON_HOME_RUN+r"/japron/apron.jar:"+APRON_HOME_RUN+r"/japron/gmp.jar:"+base+r"/bin; " +
-        r"export LD_LIBRARY_PATH="+APRON_HOME_RUN+r"/box:"+APRON_HOME_RUN+r"/octagons:"+APRON_HOME_RUN+r"/newpolka:"+APRON_HOME_RUN+r"/apron:"+APRON_HOME_RUN+r"/japron:"+APRON_HOME_RUN+r"/japron/gmp; " +
+        r"export CLASSPATH=.:"+base+r"/soot-2.5.0.jar:"+APRON_HOME_RUN+
+        r"/japron/apron.jar:"+APRON_HOME_RUN+r"/japron/gmp.jar:"+base+r"/bin; " +
+        r"export LD_LIBRARY_PATH="+APRON_HOME_RUN+r"/box:"+APRON_HOME_RUN+
+        r"/octagons:"+APRON_HOME_RUN+r"/newpolka:"+APRON_HOME_RUN+r"/apron:"+
+        APRON_HOME_RUN+r"/japron:"+APRON_HOME_RUN+r"/japron/gmp; " +
         JAVA_HOME + r"/java ch.ethz.sae.Verifier " + className
     )
 
+# construct the build command
 def build():
     print("start building..")
     base = os.getcwd()
     subprocess.call(
-        r"export CLASSPATH=bin/:"+base+r"/soot-2.5.0.jar:"+APRON_HOME_BUILD+r"/apron.jar:"+APRON_HOME_BUILD+r"/gmp.jar; " +
+        r"export CLASSPATH=bin/:"+base+r"/soot-2.5.0.jar:"+APRON_HOME_BUILD+
+        r"/apron.jar:"+APRON_HOME_BUILD+r"/gmp.jar; " +
         r"export LD_LIBRARY_PATH="+base+r"/; " +
         "mkdir -p bin; " +
         JAVA_HOME + r"/javac -d bin src/*.java; " +
