@@ -7,7 +7,7 @@ public class Test12 {
     public static void foo(int i) {
         int x;
 
-        for (x = i; x < 3; x++)
+        for (x = i; x <= 3; x++)
             ;
 
         PrinterArray pa = new PrinterArray(x);

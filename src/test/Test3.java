@@ -10,7 +10,7 @@ public class Test3 {
             x = 1 - i;
             i = 0 - i;
         } else {
-            x = i;
+            x = i + 1;
         }
 
         PrinterArray pa = new PrinterArray(x);
