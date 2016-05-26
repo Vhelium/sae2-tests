@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # Author:
 # Timon Blattner timonbl@ethz.ch
@@ -10,7 +10,8 @@ import glob
 import subprocess
 from os.path import basename
 
-JAVA_HOME = ''
+JAVA_HOME_BUILD = ''
+JAVA_HOME_RUN = ''
 APRON_HOME_BUILD = ''
 APRON_HOME_RUN = ''
 
@@ -74,15 +75,19 @@ def loadPaths():
         for line in fbuild:
             if line.startswith("JAVA_HOME"):
                 pre,tail = line.split("=",1)
-                global JAVA_HOME
-                JAVA_HOME = tail.rstrip()
+                global JAVA_HOME_BUILD
+                JAVA_HOME_BUILD = tail.rstrip()
             elif line.startswith("APRON_HOME"):
                 pre,tail= line.split("=",1)
                 global APRON_HOME_BUILD
                 APRON_HOME_BUILD = tail.rstrip()
     with open("run.sh", "r", encoding='utf8', errors='replace') as frun:
         for line in frun:
-            if line.startswith("APRON_HOME"):
+            if line.startswith("JAVA_HOME"):
+                pre,tail = line.split("=",1)
+                global JAVA_HOME_RUN
+                JAVA_HOME_RUN = tail.rstrip()
+            elif line.startswith("APRON_HOME"):
                 pre,tail= line.split("=",1)
                 global APRON_HOME_RUN
                 APRON_HOME_RUN = tail.rstrip()
@@ -96,7 +101,7 @@ def getRunCommand(className):
         r"export LD_LIBRARY_PATH="+APRON_HOME_RUN+r"/box:"+APRON_HOME_RUN+
         r"/octagons:"+APRON_HOME_RUN+r"/newpolka:"+APRON_HOME_RUN+r"/apron:"+
         APRON_HOME_RUN+r"/japron:"+APRON_HOME_RUN+r"/japron/gmp; " +
-        JAVA_HOME + r"/java ch.ethz.sae.Verifier " + className
+        JAVA_HOME_RUN + r"/java ch.ethz.sae.Verifier " + className
     )
 
 # construct the build command
@@ -108,9 +113,9 @@ def build():
         r"/apron.jar:"+APRON_HOME_BUILD+r"/gmp.jar; " +
         r"export LD_LIBRARY_PATH="+base+r"/; " +
         "mkdir -p bin; " +
-        JAVA_HOME + r"/javac -d bin src/*.java; " +
-        JAVA_HOME + r"/javac -d bin src/ch/ethz/sae/*.java; " +
-        JAVA_HOME + r"/javac -d bin src/test/*.java; ",
+        JAVA_HOME_BUILD + r"/bin/javac -d bin src/*.java; " +
+        JAVA_HOME_BUILD + r"/bin/javac -d bin src/ch/ethz/sae/*.java; " +
+        JAVA_HOME_BUILD + r"/bin/javac -d bin src/test/*.java; ",
         shell=True)
     print("finished building.")
 
