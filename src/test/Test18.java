@@ -7,7 +7,7 @@ public class Test18 {
     	    	
     	int a=10;
     	int b=1;
-       	    b=b/0;
+        b=b/0;
     	    		
         PrinterArray pa = new PrinterArray(5);      
         pa.sendJob(b);
