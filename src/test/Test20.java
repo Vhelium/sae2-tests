@@ -1,6 +1,6 @@
 // for loop -- widening; 
-// theoretically NO_DIV_ZERO
-// theoretically NO_OUT_OF_BOUNDS
+// NO_DIV_ZERO (theoretically)
+// NO_OUT_OF_BOUNDS (theoretically)
 // Elias August
 public class Test20 {
     public static void bar(PrinterArray pa) {
