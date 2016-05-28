@@ -37,8 +37,8 @@ def runTests():
         # read header (description, expected output)
         with open(code_test, "r", encoding='utf8', errors='replace') as fcode:
             descr = fcode.readline()[2:].strip()
-            expNP,_ = fcode.readline()[2:].strip().split(" ",1)
-            expOOB,_ = fcode.readline()[2:].strip().split(" ",1)
+            expNP = fcode.readline()[2:].strip().split(" ",1)[0]
+            expOOB = fcode.readline()[2:].strip().split(" ",1)[0]
 
         resNP, resOOB = executeTest(code_test, name)
 
