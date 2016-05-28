@@ -37,8 +37,8 @@ def runTests():
         # read header (description, expected output)
         with open(code_test, "r", encoding='utf8', errors='replace') as fcode:
             descr = fcode.readline()[2:].strip()
-            expNP = fcode.readline()[2:].strip().split(" ",1)[0]
-            expOOB = fcode.readline()[2:].strip().split(" ",1)[0]
+            expNP = fcode.readline()[2:].strip()
+            expOOB = fcode.readline()[2:].strip()
 
         resNP, resOOB = executeTest(code_test, name)
 
@@ -46,11 +46,17 @@ def runTests():
         if expNP == resNP:
             print("\tNP correct")
         else:
-            print("\t[EE] Expected {" + expNP + "} but got {" + resNP + "}")
+            if resNP.find("NO") >= 0: 
+                print("\t[UNSOUND] Expected {" + expNP + "} but got {" + resNP + "}")
+            else:
+                print("\t[imprec.] Expected {" + expNP + "} but got {" + resNP + "}")
         if expOOB == resOOB:
             print("\tOOB correct")
         else:
-            print("\t[EE] Expected {" + expOOB + "} but got {" + resOOB + "}")
+            if resOOB.find("NO") >= 0: 
+                print("\t[UNSOUND] Expected {" + expOOB + "} but got {" + resOOB + "}")
+            else:
+                print("\t[imprec.] Expected {" + expOOB + "} but got {" + resOOB + "}")
 
 # execute a single test and get the result back
 def executeTest(code_test, name):
