@@ -46,11 +46,17 @@ def runTests():
         if expNP == resNP:
             print("\tNP correct")
         else:
-            print("\t[EE] Expected {" + expNP + "} but got {" + resNP + "}")
+            if resNP.find("NO") >= 0: 
+                print("\t[UNSOUND] Expected {" + expNP + "} but got {" + resNP + "}")
+            else:
+                print("\t[imprec.] Expected {" + expNP + "} but got {" + resNP + "}")
         if expOOB == resOOB:
             print("\tOOB correct")
         else:
-            print("\t[EE] Expected {" + expOOB + "} but got {" + resOOB + "}")
+            if resOOB.find("NO") >= 0: 
+                print("\t[UNSOUND] Expected {" + expOOB + "} but got {" + resOOB + "}")
+            else:
+                print("\t[imprec.] Expected {" + expOOB + "} but got {" + resOOB + "}")
 
 # execute a single test and get the result back
 def executeTest(code_test, name):
